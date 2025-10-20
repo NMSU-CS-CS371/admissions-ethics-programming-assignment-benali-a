@@ -1,0 +1,55 @@
+Discussion & Reflection
+Feature Selection & Design
+•	What variables did you include, and why?
+o	Blind Model: My algorithm is designed to value long-term performance and qualitative measures over single-day test performance.
+	GPA (35%): This is the strongest factor, as it represents four years of consistent academic work.
+	Extracurriculars (30%): This is weighted heavily to reward students who show commitment, leadership, and passion outside of academics.
+	Recommendations (20%): This provides a crucial human, qualitative perspective on an applicant's character and impact on their school community.
+	Test Scores (10%): This weight was intentionally minimized. Test scores are often correlated with family income and access to test prep, so I wanted to reduce their influence.
+	Essay (5%): This is a minor factor, as it's difficult to score objectively and can be heavily influenced by outside help.
+o	Aware Model: This model intentionally includes contextual factors to promote equity. I included income, first-generation status, disability, and geographic proximity .
+•	Did you exclude any sensitive features? Why or why not?
+o	Yes, the blindScore model excludes all sensitive and contextual data to create a "blind" evaluation based only on performance metrics .
+o	However, the awareScore model includes them because ignoring an applicant's context (like their family income or first-gen status) is not truly "fair." The aware model attempts to correct for these systemic disadvantages.
+•	Should "legacy" still carry a positive weight?
+o	No. I explicitly set the legacy boost to + 0.00 in the awareScore method. Legacy status is an unearned privilege that favors applicants from wealthier, more established backgrounds. Removing it makes the admissions process more meritocratic.
+•	What other features... might you add or adjust?
+o	I made several significant adjustments to the awareScore boosts:
+	Local Preference: I increased this boost to + 0.10 (10%). As Springfield University, a mid-sized university, I believe we have a duty to serve our immediate community, and this large boost reflects that commitment.
+	Equity Boosts: I set strong boosts for low-income (+ 0.08), disability (+ 0.07), and first-gen (+ 0.06) to make a meaningful, aggressive attempt to level the playing field.
+
+Fairness & Outcomes
+•	Between the blind and aware models, which applicants benefited or lost out?
+o	Benefited: Applicants who are local, low-income, first-generation, or have a disability. An applicant who was just below the admissions cutoff on their blindScore could easily be pushed into "Admitted" status by these boosts—especially the 10% local boost.
+o	Lost out: Applicants who were just above the cutoff in the blindScore model but did not qualify for any of the awareScore boosts. They could be "jumped" in the rankings by an applicant with a lower blind score who received, for example, the 10% local and 8% low-income boosts.
+•	Which applicants specifically benefited from the aware model?
+o	Local applicants get the single biggest advantage (a 10% boost).
+o	Low-income applicants (8% boost) and applicants with a disability (7% boost) also see a major benefit.
+o	An applicant who is local, low-income, and first-gen would get a massive + 0.24 boost (0.10 + 0.08 + 0.06), which could dramatically change their outcome.
+•	Does adding income or first-generation status make the system fairer or less fair? Why?
+o	It makes the system fairer. A "blind" model that treats everyone "equally" is only fair if everyone starts from the same place. By adding these factors, the awareScore acknowledges that a 3.8 GPA from a low-income, first-gen student might represent significantly more effort and potential than a 4.0 from a student with every possible resource. It attempts to measure grit, not just privilege.
+•	Which model feels more fair overall, and why?
+o	The Aware Model feels more fair. Its design is an active attempt to build a diverse class and provide opportunities to students who have faced systemic barriers. Most importantly, it's fairer because it completely eliminates the legacy boost, which is an inherently unfair practice.
+o	My blindScore model also attempts to be fair by minimizing the impact of standardized tests (only 10%), which are known to be biased.
+
+Transparency & Accountability
+•	How transparent is your algorithm?
+o	It's moderately transparent. The logic is a straightforward weighted average plus a set of simple, additive boosts. There is no "black box" AI. The exact weights (like 30% for extracurriculars) are a choice, but the math itself is simple.
+•	Could you clearly explain a rejection to an applicant?
+o	Yes. I could clearly explain the components: "Your application was scored based on GPA (35%), Extracurriculars (30%), Recommendations (20%), Test Scores (10%), and Essay (5%)."
+o	For the awareScore, it's trickier. I would not say, "You were rejected because you aren't low-income." Instead, I would say, "Our holistic  model provides contextual boosts to applicants from underrepresented backgrounds to promote equity. In a very competitive pool, your final score did not meet the admissions cutoff."
+•	Would you feel comfortable if this algorithm evaluated your application? Why or why not?
+o	I'd be hesitant. I would be happy that test scores are only 10% and legacy is 0%.
+o	However, I would be uncomfortable with the 30% weight on extracurriculars and 10% on local. If I were a student who had to work a part-time job (limiting my extracurriculars) and didn't live nearby, I would be severely penalized by this model, which feels unfair.
+
+Broader Implications
+•	What risks might arise if such an algorithm were used in real admissions?
+o	Gaming the System: If it became public that extracurriculars were 30% of the score, applicants would "pad" their resumes with dozens of low-effort clubs, making the metric meaningless.
+o	Proxy Discrimination: The 10% local boost is the single biggest risk. Does "local" accidentally serve as a proxy for a specific race or income level? If the area around the university is wealthy and not diverse, this 10% "local preference" could end up harming diversity efforts, doing the exact opposite of its intent.
+•	What does this exercise reveal about fairness in algorithmic decision systems?
+o	It reveals that "fairness" is not a neutral concept; it is a design choice. The algorithm simply reflects the biases and priorities we code into it. My blindScore is explicitly biased against test scores and for extracurriculars. My awareScore is explicitly biased for local students.
+•	Can algorithms ever be truly fair, or do they just shift where bias appears?
+o	This exercise strongly suggests they just shift where bias appears. We haven't eliminated bias; we've just chosen our preferred biases. We replaced the bias of standardized tests with a bias for extracurricular activities and geographic location.
+•	How should fairness and accountability be balanced in automated decisions?
+o	Constant Auditing: The university must be accountable by constantly auditing the algorithm's results. Is the 10% local boost actually helping the community, or is it just benefiting wealthy suburban kids? The model's impact must be tested and justified every year.
+o	Human-in-the-Loop: An algorithm like this should never have the final say. It should be a tool to sort applicants into "clear admit," "clear reject," and "human review." All borderline cases and a random sample of all groups must be read by a person.
